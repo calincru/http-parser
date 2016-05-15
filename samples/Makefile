@@ -1,5 +1,4 @@
-#CPPFLAGS = /DDEBUG /DLOG_LEVEL=LOG_DEBUG /I. /I.. /I../..
-CPPFLAGS = /I. /I.. /I../..
+CPPFLAGS = /DDEBUG /DLOG_LEVEL=LOG_DEBUG /I. /I.. /I../..
 CFLAGS = /nologo /TP /W3 /EHsc $(CPPFLAGS)
 LINK = link
 
