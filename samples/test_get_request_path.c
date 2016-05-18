@@ -31,7 +31,7 @@ static char request_path[BUFSIZ];	/* storage for request_path */
  * Request path is stored in global request_path variable.
  */
 
-static int on_path_cb(http_parser *p, const char *buf, size_t len)
+static int on_url_cb(http_parser *p, const char *buf, size_t len)
 {
 	assert(p == &request_parser);
 	memcpy(request_path, buf, len);
@@ -39,18 +39,18 @@ static int on_path_cb(http_parser *p, const char *buf, size_t len)
 	return 0;
 }
 
-/* Use mostly null settings except for on_path callback. */
-static http_parser_settings settings_on_path = {
-	/* on_message_begin */ 0,
-	/* on_path */ on_path_cb,
-	/* on_header_field */ 0,
-	/* on_header_value */ 0,
-	/* on_url */ 0,
-	/* on_fragment */ 0,
-	/* on_query_string */ 0,
-	/* on_body */ 0,
-	/* on_headers_complete */ 0,
-	/* on_message_complete */ 0
+/* Use mostly null settings except for on_path callback */
+static const http_parser_settings settings_on_path = {
+	0,		/* on_message_begin */
+	on_url_cb,	/* on_url */
+	0,		/* on_status */
+	0,		/* on_header_field */
+	0,		/* on_header_value */
+	0,		/* on_headers_complete */
+	0,		/* on_body */
+	0,		/* on_message_complete */
+	0,		/* on_chunk_header */
+	0,		/* on_chunk_complete */
 };
 
 /*
